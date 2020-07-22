@@ -57,9 +57,20 @@ ggplot(data = penguins,
 #Variable class
 class(penguins$sex)
 class(penguins$body_mass_g)
+class(penguins$species)
+class(penguins$island)
+class(penguins$flipper_length_mm)
+class(penguins$bill_length_mm)
+class(penguins$bill_depth_mm)
 
 #Variable levels
 levels(penguins$sex)
+levels(penguins$body_mass_g)
+levels(penguins$species)
+levels(penguins$island)
+levels(penguins$flipper_length_mm)
+levels(penguins$bill_length_mm)
+levels(penguins$bill_depth_mm)
 
 #Missing data 
 is.na(penguins)
@@ -71,7 +82,7 @@ penuins %>%
   group_by(island) %>%
   summarise(mean(bill_length_mm))
 
-#NA counts bar graph
+#NA count
 penguins %>%
   #group_by(species) %>%
   select(everything()) %>%
@@ -93,6 +104,15 @@ penguins %>%
   facet_wrap(~sex) +
   theme_minimal() +
   labs(title = 'Penguins Specified by Gender')
+
+# Bar graph counts > colorblind palettes
+penguins %>%
+  count(species) %>%
+  ggplot() + geom_col(aes(x = species, y = n, fill = species)) + 
+  geom_label(aes(x = species, y = n, label = n)) + 
+  scale_fill_manual(values = c("grey","light blue","pink")) +
+  theme_minimal() + 
+  labs (title = 'Penguin Species Frequency')
 
 summary(penguins)
 summary(penguins$sex)
